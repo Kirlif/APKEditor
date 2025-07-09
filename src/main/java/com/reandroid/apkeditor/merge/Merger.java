@@ -170,6 +170,21 @@ public class Merger extends CommandExecutor<MergerOptions> {
                     + AndroidManifestBlock.getAndroidNameValue(meta) + "\"");
             application.remove(meta);
         }
+        List<ResXmlElement> licensecheckElements =
+                AndroidManifestHelper.listPairipLicensecheck(application);
+        if(!licensecheckElements.isEmpty()) {
+            for(ResXmlElement elem : licensecheckElements){
+                logMessage("Removed-element : <" + elem.getName() + "> name=\""
+                        + AndroidManifestBlock.getAndroidNameValue(elem) + "\"");
+                application.remove(elem);
+            }
+                ResXmlElement usesPermission = manifest.getUsesPermission("com.android.vending.CHECK_LICENSE");
+            if (usesPermission != null) {
+                logMessage("Removed-element : <" + usesPermission.getName() + "> name=\""
+                        + AndroidManifestBlock.getAndroidNameValue(usesPermission) + "\"");
+                manifest.getManifestElement().remove(usesPermission);
+            }
+        }
         manifest.refresh();
     }
     private boolean removeSplitsTableEntry(ResXmlElement metaElement, ApkModule apkModule) {

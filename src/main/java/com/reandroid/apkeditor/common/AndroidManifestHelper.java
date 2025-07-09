@@ -62,6 +62,32 @@ public class AndroidManifestHelper {
         }));
     }
 
+
+    public static List<ResXmlElement> listPairipLicensecheck(ResXmlElement parentElement){
+        if(parentElement == null){
+            return EmptyList.of();
+        }
+        return CollectionUtil.toList(parentElement.getElements(element -> {
+            if (!(element.equalsName(AndroidManifest.TAG_activity) || element.equalsName(AndroidManifest.TAG_provider))){
+                return false;
+            }
+            ResXmlAttribute nameAttribute = CollectionUtil.getFirst(element
+                    .getAttributes(AndroidManifestHelper.NAME_FILTER));
+            if(nameAttribute == null){
+                return false;
+            }
+            String value = nameAttribute.getValueAsString();
+            if(value == null){
+                return false;
+            }
+            if (value.startsWith("com.pairip.licensecheck.")){
+                return true;
+            }
+            return false;
+        }));
+    }
+
+
     public static void removeAttributeFromManifestByName(AndroidManifestBlock androidManifestBlock,
                                                                  String resourceName, APKLogger logger){
         ResXmlElement manifestElement = androidManifestBlock.getManifestElement();
