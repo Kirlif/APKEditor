@@ -228,12 +228,12 @@ Options:
                         versions up to 042.
                          2) jf : Use library by JesusFreke/smali, supports dex
                         versions 035 and below.
-                          *Default = jf
-                          **WARN: The default value will be replaced by
-                        "internal" on coming versions.
+                          *Default = internal
                           *See <Notes> below.
                         [internal, jf]
 Flags:
+  -dex-profile          Encodes decoded dex profile json files to binary
+                        assets/dexopt files.
   -f                    Force delete output path.
   -h | -help | --help   Displays this help and exit.
   -no-cache             Ignore built cached .dex files and re-build smali files.
@@ -405,6 +405,17 @@ Protects apk resources against almost all known decompile/modify tools.
 ```ShellSession
 Protects/Obfuscates apk resource files. Using unique obfuscation techniques.
 Options:
+  -dex-level            Dex protection level (0-5).
+                         0 - Off
+                         1 - Basic
+                         2 - Normal (Not implemented yet)
+                         3 - High (Not implemented yet)
+                         4 - Max (Not implemented yet)
+                         * Default 0
+  -dic-dir-names        Path to a text file containing a list of directory
+                        names separated by new line.
+  -dic-file-names       Path to a text file containing a list of file names
+                        separated by new line.
   -i                    Input path.
   -keep-type            Keep specific resource type names (e.g drawable), By
                         default keeps only <font> resource type.
@@ -416,10 +427,6 @@ Flags:
                          * Apps might crash if accessing apk files directly e.g
                         Class.getResourceAsStream().
                          * Some apk scanners might flag it as "Malformed zip"
-  -dic-dir-names        Path to a text file containing a list of directory
-                        names separated by new line.
-  -dic-file-names       Path to a text file containing a list of file names
-                        separated by new line.
   -f                    Force delete output path.
   -h | -help | --help   Displays this help and exit.
   -skip-manifest        Do not protect manifest.
